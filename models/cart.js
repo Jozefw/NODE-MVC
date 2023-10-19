@@ -17,7 +17,6 @@ module.exports = class Cart{
                 console.log('cart content', JSON.parse(fileContent));
             }
             // check cart for the current existing product 
-            
             const currentProductIndex = cart.products.findIndex(item => item.id === id);
             const currentProduct = cart.products[currentProductIndex];
             let updatedProduct;
@@ -31,9 +30,9 @@ module.exports = class Cart{
                 updatedProduct = {id:id, qty:1}
                 cart.products = [...cart.products,updatedProduct]
             }
-            cart.totalPrice = cart.totalPrice + (+prodPrice);
+            cart.totalPrice = cart.totalPrice + parseFloat(prodPrice);
             fs.writeFile(cartFile,JSON.stringify(cart),err =>{
-                console.log(err)
+                console.log("CartError:" + err)
             })
         })
 
