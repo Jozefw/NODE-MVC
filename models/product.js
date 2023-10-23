@@ -29,7 +29,7 @@ module.exports = class Product {
   save() {
     getProductsFromFile(products => {
       if(this.id) {
-        console.log("in new product",this)
+        console.log("in new product",this.id)
         const existingProductIndex = products.findIndex(product => product.id === this.id);
         const updatedProducts = [...products];
         updatedProducts[existingProductIndex] = this;
@@ -40,6 +40,7 @@ module.exports = class Product {
       } else {
         this.id = Math.random().toString();
           products.push(this);
+          console.log("in creation mode",this)
           fs.writeFile(p, JSON.stringify(products), err => {
             console.log(err);
           });

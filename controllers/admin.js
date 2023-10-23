@@ -45,11 +45,14 @@ exports.getProducts = (req, res, next) => {
   });
 };
 exports.postEditProduct = (req, res, next) => {
-  Product.fetchAll(products => {
-    res.render('admin/products', {
-      prods: products,
-      pageTitle: 'Admin Products',
-      path: '/admin/products'
-    });
-  });
+  const editingProdId = req.body.productId;
+  const editingTitle = req.body.title;
+  const editingPrice = req.body.price;
+  const editingImageUrl = req.body.imageUrl;
+  const editingDescription = req.body.description;
+  const updatedProduct = new Product(
+    editingProdId,editingTitle,editingImageUrl,editingDescription,editingPrice,
+  )
+  updatedProduct.save();
+  res.redirect('/admin/products')
 };
