@@ -29,10 +29,22 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  res.render('shop/cart', {
-    path: '/cart',
-    pageTitle: 'Your Cart'
-  });
+  Cart.getCartContents(cart=>{
+    Product.fetchAll(products=>{
+      const cartContent = [];
+      for(product of products){
+        const cartProductData = cart.products.find(prod => prod.id === product.id) 
+        if(cartProductData){
+          cartContent.push({productData: product,qty:cartProductData.qty})
+        }
+      }
+      res.render('shop/cart', {
+        path: '/cart',
+        pageTitle: 'Your Cart',
+        products:cartContent
+      });
+    })
+  })
 };
 exports.postCart = (req, res, next) => {
   const postCartProdId = req.body.productId;
