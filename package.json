@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "start-server": "node app.js"
+    "start-server": "node --inspect app.js"
   },
-  "author": "Maximilian Schwarzmüller",
+  "author": "Jozef Jericho Woroniecki",
   "license": "ISC",
   "devDependencies": {
     "nodemon": "^1.18.3"
