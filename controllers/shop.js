@@ -28,9 +28,8 @@ exports.getProduct = (req, res, next) => {
   .catch((err) => {
     console.log(err)
   })
-   
   };
- 
+
 exports.getIndex = (req, res, next) => {
   Product.findAll()
   .then((products) =>{
@@ -66,6 +65,7 @@ req.user
   console.log(err)
 })
 };
+
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   let returnedCart;
@@ -77,24 +77,25 @@ exports.postCart = (req, res, next) => {
     })
     .then(products =>{
       let product;
+      // if we do have products
       if(products.length > 0){
-        product = products[0];
+        product = products[0]
       }
       let newQty = 1;
       if(product){
-          //...do something if the product doesnt exist
+        // if product exists ad to the qty
       }
-      return Product.findByID(prodId)
+      // if there is no product
+      return Product.findByPk(prodId)
       .then((product)=>{
         return returnedCart.addProduct(product,{through:{quantity:newQty}})
       })
-      .catch((err)=>{
-
-      })
+      .catch((err)=>{console.log(err)})
     })
-    .catch((err)=>{
-      console.log(err);
+    .then(products =>{
+      res.redirect('/cart')
     })
+    .catch(err=>{console.log(err)})
 }
 
 exports.CartDeleteProduct = (req,res,next)=>{
