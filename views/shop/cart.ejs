@@ -5,16 +5,18 @@
         <%- include('../includes/navigation.ejs') %>
         <main>
             <% if (products.length > 0){ %>
-                <ul>
+                <ul class="cart__item-list">
+                    <h1 class="cart__item-listTitle">Your Cart</h1>
                     <% products.forEach(product => { %>
-                        <li>
-                           <p><%= product.productData.title %> (<%=product.qty %>)</p> 
-                           <form action="/cart-delete-item" method="POST">
-                           <input type="hidden" value="<%= product.productData.id %>" name="productId">
-                            <button class="button" type="submit">Delete</button>
+                        <li class="cart__item">
+                        <h1><%= product.title %> </h1> 
+                        <h2>Quantity: <%=product.cartItem.quantity %></h2> 
+                        <form action="/cart-delete-item" method="POST">
+                        <input type="hidden" value="<%= product.id %>" name="productId">
+                            <button class="button btn danger" type="submit">Delete</button>
                         </form>
                         </li>
-                        <%}) %>
+                        <% }) %> 
                 </ul>
                 <% } else { %>
                     <h1> Cart Has No Products...</h1>

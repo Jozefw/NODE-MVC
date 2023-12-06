@@ -84,6 +84,9 @@ exports.postCart = (req, res, next) => {
       let newQty = 1;
       if(product){
         // if product exists ad to the qty
+        const prevQuantity = product.cartItem.quantity;
+        newQty = prevQuantity + 1;
+        return returnedCart.addProduct(product,{through:{quantity:newQty}})
       }
       // if there is no product
       return Product.findByPk(prodId)
