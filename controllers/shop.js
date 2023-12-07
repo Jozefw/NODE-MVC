@@ -103,10 +103,21 @@ exports.postCart = (req, res, next) => {
 
 exports.CartDeleteProduct = (req,res,next)=>{
   const prodId = req.body.productId;
-  Product.findByPk(prodId,product => {
-    Cart.deleteCartProduct(prodId,product.price);
-    res.redirect('/cart')
-  })
+  req.user.getCart()
+    .then((cartItems)=>{
+      return cartItems.getProducts({where:{id:prodId}})
+    })
+    .then((products)=>{
+      console.log(products)
+      product = products[0]
+      product.cartItem.destroy();
+    })
+    .then(()=>{
+      res.redirect('/cart')
+    })
+    .catch(err=>{
+      console.log(err())
+    })
 }
 
 exports.getOrders = (req, res, next) => {
